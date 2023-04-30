@@ -1,10 +1,10 @@
 import 'package:expense_tracker_app/widgets/chart/chart.dart';
 import 'package:expense_tracker_app/widgets/expenses_list/new_expense.dart';
 
-import 'widgets/expenses_list/expenses_list.dart';
+import '../widgets/expenses_list/expenses_list.dart';
 import 'package:flutter/material.dart';
 
-import 'models/expense.dart';
+import '../models/expense.dart';
 
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
@@ -16,6 +16,7 @@ class Expenses extends StatefulWidget {
 }
 
 class _ExpensesState extends State<Expenses> {
+  // TODO Turn this into a database instead.
   final List<Expense> _registeredExpenses = [
     Expense(
       title: "Flutter Course",
@@ -94,21 +95,14 @@ class _ExpensesState extends State<Expenses> {
           icon: const Icon(Icons.add),
         ),
       ]),
-      body: width < 600
-          ? Column(
-              children: [
-                Chart(expenses: _registeredExpenses),
-                Expanded(
-                  child: mainContent,
-                ),
-              ],
-            )
-          : Row(children: [
-              Expanded(child: Chart(expenses: _registeredExpenses)),
-              Expanded(
-                child: mainContent,
-              ),
-            ]),
+      body: Column(
+        children: [
+          Chart(expenses: _registeredExpenses),
+          Expanded(
+            child: mainContent,
+          ),
+        ],
+      ),
     );
   }
 }
