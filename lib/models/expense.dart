@@ -14,7 +14,7 @@ class Expense {
     required this.category,
   });
 
-  static var box_name = 'expenses';
+  static var boxName = 'expenses';
 
   @HiveField(0)
   final String title;
