@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './utils/start_hive.dart';
 import 'views/expenses.dart';
 
 var kColorScheme =
@@ -9,7 +10,9 @@ var kDarkColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
 );
 
-void main() {
+void main() async {
+  await startHive();
+
   runApp(
     MaterialApp(
       darkTheme: ThemeData.dark().copyWith(

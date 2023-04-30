@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:expense_tracker_app/models/expense.dart';
 
@@ -19,7 +16,7 @@ class _NewExpenseState extends State<NewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   DateTime? _selectedDate;
-  Category _selectedCategory = Category.leisure;
+  final String _selectedCategory = '';
 
   void _presentDatePicker() async {
     final now = DateTime.now();
@@ -147,26 +144,6 @@ class _NewExpenseState extends State<NewExpense> {
                 if (width >= 600)
                   Row(
                     children: [
-                      DropdownButton(
-                          value: _selectedCategory,
-                          items: Category.values
-                              .map(
-                                (category) => DropdownMenuItem(
-                                  value: category,
-                                  child: Text(
-                                    category.name.toString().toUpperCase(),
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                          onChanged: (data) {
-                            setState(() {
-                              if (data == null) {
-                                return;
-                              }
-                              _selectedCategory = data;
-                            });
-                          }),
                       const SizedBox(
                         width: 24,
                       ),
@@ -245,26 +222,6 @@ class _NewExpenseState extends State<NewExpense> {
                 else
                   Row(
                     children: [
-                      DropdownButton(
-                          value: _selectedCategory,
-                          items: Category.values
-                              .map(
-                                (category) => DropdownMenuItem(
-                                  value: category,
-                                  child: Text(
-                                    category.name.toString().toUpperCase(),
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                          onChanged: (data) {
-                            setState(() {
-                              if (data == null) {
-                                return;
-                              }
-                              _selectedCategory = data;
-                            });
-                          }),
                       const Spacer(),
                       TextButton(
                         onPressed: _cancelExpense,
