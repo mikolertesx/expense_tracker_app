@@ -5,5 +5,5 @@ Future<void> startHive() async {
   await Hive.initFlutter();
   // Add config options here.
   Hive.registerAdapter(ExpenseAdapter());
-  await Hive.openBox<Expense>('expenses');
+  await Hive.openBox<Expense>(Expense.box_name);
 }

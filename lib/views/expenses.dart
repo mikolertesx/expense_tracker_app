@@ -18,7 +18,7 @@ class Expenses extends StatefulWidget {
 
 class _ExpensesState extends State<Expenses> {
   List<Expense> _registeredExpenses = [];
-  final expenseBox = Hive.box<Expense>('expenses');
+  final expenseBox = Hive.box<Expense>(Expense.box_name);
 
   @override
   void initState() {
