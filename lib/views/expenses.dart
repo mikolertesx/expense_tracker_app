@@ -1,5 +1,6 @@
 import 'package:expense_tracker_app/widgets/chart/chart.dart';
 import 'package:expense_tracker_app/widgets/expenses_list/new_expense.dart';
+import 'package:hive/hive.dart';
 
 import '../widgets/expenses_list/expenses_list.dart';
 import 'package:flutter/material.dart';
@@ -16,24 +17,21 @@ class Expenses extends StatefulWidget {
 }
 
 class _ExpensesState extends State<Expenses> {
-  // TODO Turn this into a database instead.
-  final List<Expense> _registeredExpenses = [
-    Expense(
-      title: "Flutter Course",
-      amount: 19.99,
-      date: DateTime.now(),
-      category: Category.leisure,
-    ),
-    Expense(
-      title: "Cinema",
-      amount: 19.99,
-      date: DateTime.now(),
-      category: Category.leisure,
-    )
-  ];
+  List<Expense> _registeredExpenses = [];
+  final expenseBox = Hive.box<Expense>(Expense.box_name);
+
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      _registeredExpenses = expenseBox.values.toList();
+    });
+  }
 
   void _addExpense(Expense expense) {
     setState(() {
+      expenseBox.add(expense);
       _registeredExpenses.add(expense);
     });
   }
@@ -75,8 +73,6 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-
     Widget mainContent = const Center(
       child: Text('No expenses found. Start adding some!'),
     );
