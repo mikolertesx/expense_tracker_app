@@ -39,6 +39,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   uuid: ^3.0.7
   intl: ^0.18.1
+  flutter_svg: ^2.0.5
 
 dev_dependencies:
   hive_generator: ^1.1.1
