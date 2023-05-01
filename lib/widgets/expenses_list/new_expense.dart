@@ -1,5 +1,7 @@
+import 'package:expense_tracker_app/views/category_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:expense_tracker_app/models/expense.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class NewExpense extends StatefulWidget {
   const NewExpense(this.onAddExpense, {super.key});
@@ -98,8 +100,6 @@ class _NewExpenseState extends State<NewExpense> {
     final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
 
     return LayoutBuilder(builder: (ctx, constraints) {
-      final width = constraints.maxWidth;
-
       return SizedBox(
         height: double.infinity,
         child: SingleChildScrollView(
@@ -107,132 +107,62 @@ class _NewExpenseState extends State<NewExpense> {
             padding: EdgeInsets.fromLTRB(16, 48, 16, keyboardSpace + 16),
             child: Column(
               children: [
-                if (width >= 600)
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: _titleController,
-                          maxLength: 50,
-                          decoration: const InputDecoration(
-                            label: Text('Title'),
-                          ),
+                TextField(
+                  controller: _titleController,
+                  maxLength: 50,
+                  decoration: const InputDecoration(
+                    label: Text('Title'),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _amountController,
+                        maxLength: 50,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          prefixText: '\$ ',
+                          label: Text('Amount'),
                         ),
                       ),
-                      const SizedBox(width: 24),
-                      Expanded(
-                        child: TextField(
-                          controller: _amountController,
-                          maxLength: 50,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            prefixText: '\$ ',
-                            label: Text('Amount'),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                else
-                  TextField(
-                    controller: _titleController,
-                    maxLength: 50,
-                    decoration: const InputDecoration(
-                      label: Text('Title'),
                     ),
-                  ),
-                if (width >= 600)
-                  Row(
-                    children: [
-                      const SizedBox(
-                        width: 24,
-                      ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              _selectedDate == null
-                                  ? 'No date selected'
-                                  : formatter.format(
-                                      _selectedDate!,
-                                    ),
-                            ),
-                            IconButton(
-                              onPressed: _presentDatePicker,
-                              icon: const Icon(Icons.date_range),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  )
-                else
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: _amountController,
-                          maxLength: 50,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            prefixText: '\$ ',
-                            label: Text('Amount'),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            _selectedDate == null
+                                ? 'No date selected'
+                                : formatter.format(
+                                    _selectedDate!,
+                                  ),
                           ),
-                        ),
+                          IconButton(
+                            onPressed: _presentDatePicker,
+                            icon: const Icon(Icons.date_range),
+                          )
+                        ],
                       ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              _selectedDate == null
-                                  ? 'No date selected'
-                                  : formatter.format(
-                                      _selectedDate!,
-                                    ),
-                            ),
-                            IconButton(
-                              onPressed: _presentDatePicker,
-                              icon: const Icon(Icons.date_range),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                    )
+                  ],
+                ),
                 const SizedBox(height: 16),
-                if (width >= 600)
-                  Row(
-                    children: [
-                      const Spacer(),
-                      TextButton(
-                        onPressed: _cancelExpense,
-                        child: const Text('Cancel'),
-                      ),
-                      ElevatedButton(
-                        onPressed: _submitExpenseData,
-                        child: const Text('Save Expense'),
-                      )
-                    ],
-                  )
-                else
-                  Row(
-                    children: [
-                      const Spacer(),
-                      TextButton(
-                        onPressed: _cancelExpense,
-                        child: const Text('Cancel'),
-                      ),
-                      ElevatedButton(
-                        onPressed: _submitExpenseData,
-                        child: const Text('Save Expense'),
-                      )
-                    ],
-                  )
+                Row(
+                  children: [
+                    const Spacer(),
+                    TextButton(
+                      onPressed: _cancelExpense,
+                      child: const Text('Cancel'),
+                    ),
+                    ElevatedButton(
+                      onPressed: _submitExpenseData,
+                      child: const Text('Save Expense'),
+                    ),
+                  ],
+                )
               ],
             ),
           ),
