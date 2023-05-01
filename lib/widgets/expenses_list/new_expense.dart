@@ -17,7 +17,6 @@ class NewExpense extends StatefulWidget {
 class _NewExpenseState extends State<NewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
-  String? _selectedIcon;
   DateTime? _selectedDate;
   final String _selectedCategory = '';
 
@@ -72,23 +71,6 @@ class _NewExpenseState extends State<NewExpense> {
     );
 
     return;
-  }
-
-  Future<String?> _showIconPicker() {
-    return showModalBottomSheet<String>(
-        context: context,
-        builder: (ctx) {
-          return const CategoryPicker();
-        });
-  }
-
-  void _updateIcon() async {
-    final result = await _showIconPicker();
-    if (result != null) {
-      setState(() {
-        _selectedIcon = result;
-      });
-    }
   }
 
   void _submitExpenseData() {
@@ -170,11 +152,6 @@ class _NewExpenseState extends State<NewExpense> {
                 const SizedBox(height: 16),
                 Row(
                   children: [
-                    IconButton(
-                      onPressed: _updateIcon,
-                      icon: const Icon(Icons.calendar_month),
-                    ),
-                    if (_selectedIcon != null) SvgPicture.asset(_selectedIcon!),
                     const Spacer(),
                     TextButton(
                       onPressed: _cancelExpense,
