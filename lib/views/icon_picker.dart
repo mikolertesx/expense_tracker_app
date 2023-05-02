@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class CategoryPicker extends StatefulWidget {
-  const CategoryPicker({super.key});
+class IconPicker extends StatefulWidget {
+  const IconPicker({super.key});
 
   @override
-  State<CategoryPicker> createState() => _CategoryPickerState();
+  State<IconPicker> createState() => _IconPickerState();
 }
 
-class _CategoryPickerState extends State<CategoryPicker> {
+class _IconPickerState extends State<IconPicker> {
   List<String> resources = [];
   String? selectedResource;
 

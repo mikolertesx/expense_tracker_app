@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:expense_tracker_app/models/expense.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+import '../../models/category.dart';
 
 class NewExpense extends StatefulWidget {
   const NewExpense(this.onAddExpense, {super.key});
@@ -13,10 +17,26 @@ class NewExpense extends StatefulWidget {
 }
 
 class _NewExpenseState extends State<NewExpense> {
+  final _categoriesBox = Hive.box<Category>(Category.boxName);
+
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
-  DateTime? _selectedDate;
-  final String _selectedCategory = '';
+  late DateTime _selectedDate;
+  late Category _selectedCategory;
+
+  List<Category> _getCategories() {
+    return List.from(_categoriesBox.values);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      _selectedCategory = _categoriesBox.values.first;
+      _selectedDate = DateTime.now();
+    });
+  }
 
   void _presentDatePicker() async {
     final now = DateTime.now();
@@ -75,9 +95,7 @@ class _NewExpenseState extends State<NewExpense> {
     final enteredAmount = double.tryParse(_amountController.text);
     final titleIsInvalid = _titleController.text.trim().isEmpty;
     final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
-    final dateIsInvalid = _selectedDate == null;
-
-    if (titleIsInvalid || amountIsInvalid || dateIsInvalid) {
+    if (titleIsInvalid || amountIsInvalid) {
       _showDialog();
 
       return;
@@ -85,8 +103,8 @@ class _NewExpenseState extends State<NewExpense> {
 
     widget.onAddExpense(Expense(
       amount: enteredAmount,
-      category: _selectedCategory,
-      date: _selectedDate!,
+      category: _selectedCategory.title,
+      date: _selectedDate,
       title: _titleController.text,
     ));
 
@@ -132,11 +150,9 @@ class _NewExpenseState extends State<NewExpense> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            _selectedDate == null
-                                ? 'No date selected'
-                                : formatter.format(
-                                    _selectedDate!,
-                                  ),
+                            formatter.format(
+                              _selectedDate,
+                            ),
                           ),
                           IconButton(
                             onPressed: _presentDatePicker,
@@ -147,6 +163,27 @@ class _NewExpenseState extends State<NewExpense> {
                     )
                   ],
                 ),
+                DropdownButton(
+                    value: _selectedCategory,
+                    items: _getCategories()
+                        .map(
+                          (item) => DropdownMenuItem<Category>(
+                            value: item,
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(item.image),
+                                Text(item.title),
+                              ],
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (value) {
+                      if (value == null) return;
+                      setState(() {
+                        _selectedCategory = value;
+                      });
+                    }),
                 const SizedBox(height: 16),
                 Row(
                   children: [

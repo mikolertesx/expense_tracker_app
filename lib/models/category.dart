@@ -1,15 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:intl/intl.dart';
 
 part 'category.g.dart';
-
-final formatter = DateFormat.yMd();
 
 @HiveType(typeId: 2)
 class Category extends HiveObject {
   Category({
     required this.title,
     required this.image,
+    this.maxPrice,
+    this.color,
   });
 
   static var boxName = 'categories';
@@ -19,4 +19,10 @@ class Category extends HiveObject {
 
   @HiveField(1)
   final String image;
+
+  @HiveField(2)
+  final double? maxPrice;
+
+  @HiveField(3)
+  final Color? color;
 }

@@ -15,6 +15,8 @@ class NewCategory extends StatefulWidget {
 }
 
 class _NewCategoryState extends State<NewCategory> {
+  // TODO Add Color option to the categories.
+
   String svgImage = 'assets/icons/bookmark.svg';
   final _titleController = TextEditingController();
 
@@ -33,7 +35,7 @@ class _NewCategoryState extends State<NewCategory> {
     final data = await showModalBottomSheet(
         context: context,
         builder: (ctx) {
-          return const CategoryPicker();
+          return const IconPicker();
         });
 
     if (data == null) return;
