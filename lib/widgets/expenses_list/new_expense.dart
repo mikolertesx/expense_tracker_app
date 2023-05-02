@@ -1,7 +1,5 @@
-import 'package:expense_tracker_app/views/category_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:expense_tracker_app/models/expense.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class NewExpense extends StatefulWidget {
   const NewExpense(this.onAddExpense, {super.key});

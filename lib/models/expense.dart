@@ -6,7 +6,7 @@ part 'expense.g.dart';
 final formatter = DateFormat.yMd();
 
 @HiveType(typeId: 1)
-class Expense {
+class Expense extends HiveObject {
   Expense({
     required this.title,
     required this.amount,
