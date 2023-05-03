@@ -1,6 +1,5 @@
 import 'package:expense_tracker_app/widgets/chart/chart.dart';
-import 'package:expense_tracker_app/widgets/expenses_list/new_expense.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../widgets/expenses_list/expenses_list.dart';
 import 'package:flutter/material.dart';
@@ -17,31 +16,10 @@ class Expenses extends StatefulWidget {
 }
 
 class _ExpensesState extends State<Expenses> {
-  List<Expense> _registeredExpenses = [];
   final expenseBox = Hive.box<Expense>(Expense.boxName);
 
-  @override
-  void initState() {
-    super.initState();
-
-    setState(() {
-      _registeredExpenses = expenseBox.values.toList();
-    });
-  }
-
-  void _addExpense(Expense expense) {
-    setState(() {
-      expenseBox.add(expense);
-      _registeredExpenses.add(expense);
-    });
-  }
-
   void _removeExpense(Expense expense) {
-    final expenseIndex = _registeredExpenses.indexOf(expense);
-
-    setState(() {
-      _registeredExpenses.remove(expense);
-    });
+    expense.delete();
 
     ScaffoldMessenger.of(context).clearSnackBars();
 
@@ -54,51 +32,38 @@ class _ExpensesState extends State<Expenses> {
         action: SnackBarAction(
             label: "Undo",
             onPressed: () {
-              setState(() {
-                _registeredExpenses.insert(expenseIndex, expense);
-              });
+              expenseBox.add(expense);
             }),
       ),
     );
   }
 
-  void _openAddExpenseOverlay() {
-    showModalBottomSheet(
-      useSafeArea: true,
-      isScrollControlled: true,
-      context: context,
-      builder: (ctx) => NewExpense(_addExpense),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    Widget mainContent = const Center(
-      child: Text('No expenses found. Start adding some!'),
-    );
+    return ValueListenableBuilder(
+      valueListenable: Hive.box<Expense>(Expense.boxName).listenable(),
+      builder: (ctx, box, widget) {
+        final expenses = box.values.toList();
 
-    if (_registeredExpenses.isNotEmpty) {
-      mainContent = ExpensesList(
-        expenses: _registeredExpenses,
-        onDismiss: _removeExpense,
-      );
-    }
+        Widget mainContent = const Center(
+          child: Text('No expenses found. Start adding some!'),
+        );
+        if (expenses.isNotEmpty) {
+          mainContent = ExpensesList(
+            expenses: expenses,
+            onDismiss: _removeExpense,
+          );
+        }
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Expense Tracker'), actions: [
-        IconButton(
-          onPressed: _openAddExpenseOverlay,
-          icon: const Icon(Icons.add),
-        ),
-      ]),
-      body: Column(
-        children: [
-          Chart(expenses: _registeredExpenses),
-          Expanded(
-            child: mainContent,
-          ),
-        ],
-      ),
+        return Column(
+          children: [
+            Chart(expenses: expenses),
+            Expanded(
+              child: mainContent,
+            ),
+          ],
+        );
+      },
     );
   }
 }

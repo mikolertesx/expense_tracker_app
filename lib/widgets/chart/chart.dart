@@ -48,12 +48,12 @@ class Chart extends StatelessWidget {
           end: Alignment.topCenter,
         ),
       ),
-      child: Column(
+      child: const Column(
         children: [
           Expanded(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
-              children: const [
+              children: [
                 // for (final bucket in buckets) // alternative to map()
                 //   ChartBar(
                 //     fill: bucket.totalExpenses == 0
@@ -63,7 +63,7 @@ class Chart extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Row(
               // children: buckets
               //     .map(

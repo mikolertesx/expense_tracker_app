@@ -1,6 +1,6 @@
+import 'package:expense_tracker_app/views/main_view.dart';
 import 'package:flutter/material.dart';
 import './utils/start_hive.dart';
-import 'views/expenses.dart';
 
 var kColorScheme =
     ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 96, 59, 181));
@@ -53,7 +53,7 @@ void main() async {
               ),
             ),
       ),
-      home: const Expenses(),
+      home: const MainView(),
     ),
   );
 }
