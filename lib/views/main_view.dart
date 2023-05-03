@@ -19,10 +19,13 @@ class _MainViewState extends State<MainView> {
   final expenseBox = Hive.box<Expense>(Expense.boxName);
   final categoryBox = Hive.box<Category>(Category.boxName);
   int _selectedIndex = 0;
-
   void _addExpense(Expense expense) {
     setState(() {
       expenseBox.add(expense);
+      final selectedCategory = expense.category;
+      selectedCategory.expensesList.add(expense);
+
+      selectedCategory.save();
     });
   }
 

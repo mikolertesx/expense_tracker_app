@@ -20,7 +20,7 @@ class ExpenseAdapter extends TypeAdapter<Expense> {
       title: fields[0] as String,
       amount: fields[1] as double,
       date: fields[2] as DateTime,
-      category: fields[3] as String,
+      category: fields[3] as Category,
     );
   }
 

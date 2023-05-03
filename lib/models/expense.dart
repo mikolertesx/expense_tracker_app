@@ -1,6 +1,8 @@
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
+import './category.dart';
+
 part 'expense.g.dart';
 
 final formatter = DateFormat.yMd();
@@ -26,7 +28,7 @@ class Expense extends HiveObject {
   final DateTime date;
 
   @HiveField(3)
-  final String category;
+  final Category category;
 
   String get formattedDate {
     return formatter.format(date);

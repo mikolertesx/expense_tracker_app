@@ -1,7 +1,6 @@
 import 'package:expense_tracker_app/widgets/categories_list/categories_list.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
 import '../models/category.dart';
 
 class CreateCategory extends StatefulWidget {
@@ -36,6 +35,10 @@ class _CreateCategoryState extends State<CreateCategory> {
 
   @override
   Widget build(BuildContext context) {
+    final expensesList = categoriesBox.values.first.expensesList;
+
+    print(expensesList.keys);
+
     return ValueListenableBuilder(
       valueListenable: categoriesBox.listenable(),
       builder: (ctx, box, widget) {

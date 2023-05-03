@@ -103,7 +103,7 @@ class _NewExpenseState extends State<NewExpense> {
 
     widget.onAddExpense(Expense(
       amount: enteredAmount,
-      category: _selectedCategory.title,
+      category: _selectedCategory,
       date: _selectedDate,
       title: _titleController.text,
     ));

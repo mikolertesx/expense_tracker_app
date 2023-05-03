@@ -3,9 +3,7 @@ import 'package:expense_tracker_app/models/expense.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 Future<void> startHive() async {
-  await Hive.initFlutter();
-
-  // Adapters
+  await Hive.initFlutter(); // Adapters
   Hive.registerAdapter(ExpenseAdapter());
   Hive.registerAdapter(CategoryAdapter());
 

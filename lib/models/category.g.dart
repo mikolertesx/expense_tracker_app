@@ -19,17 +19,25 @@ class CategoryAdapter extends TypeAdapter<Category> {
     return Category(
       title: fields[0] as String,
       image: fields[1] as String,
-    );
+      maxPrice: fields[2] as double?,
+      color: fields[3] as Color?,
+    )..expensesList = (fields[4] as HiveList).castHiveList();
   }
 
   @override
   void write(BinaryWriter writer, Category obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
-      ..write(obj.image);
+      ..write(obj.image)
+      ..writeByte(2)
+      ..write(obj.maxPrice)
+      ..writeByte(3)
+      ..write(obj.color)
+      ..writeByte(4)
+      ..write(obj.expensesList);
   }
 
   @override
