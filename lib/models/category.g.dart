@@ -21,7 +21,7 @@ class CategoryAdapter extends TypeAdapter<Category> {
       image: fields[1] as String,
       maxPrice: fields[2] as double?,
       color: fields[3] as Color?,
-    )..expensesList = (fields[4] as HiveList).castHiveList();
+    )..expensesList = (fields[4] as List).cast<Expense>();
   }
 
   @override

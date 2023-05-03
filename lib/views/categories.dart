@@ -35,14 +35,10 @@ class _CreateCategoryState extends State<CreateCategory> {
 
   @override
   Widget build(BuildContext context) {
-    final expensesList = categoriesBox.values.first.expensesList;
-
-    print(expensesList.keys);
-
     return ValueListenableBuilder(
       valueListenable: categoriesBox.listenable(),
       builder: (ctx, box, widget) {
-        final categories = categoriesBox.values.toList();
+        final categories = box.values.toList();
 
         Widget mainContent = const Center(
           child: Text('No categories found. Start adding some!'),

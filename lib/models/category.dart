@@ -6,13 +6,15 @@ part 'category.g.dart';
 
 @HiveType(typeId: 2)
 class Category extends HiveObject {
-  final expenseBox = Hive.box<Expense>(Expense.boxName);
+  late final Box<Expense> expenseBox;
   Category({
     required this.title,
     required this.image,
     this.maxPrice,
     this.color,
-  });
+  }) {
+    expensesList = [];
+  }
 
   static var boxName = 'categories';
 
@@ -29,5 +31,5 @@ class Category extends HiveObject {
   final Color? color;
 
   @HiveField(4)
-  late HiveList<Expense> expensesList = HiveList(expenseBox);
+  late List<Expense> expensesList;
 }
